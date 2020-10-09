@@ -2,13 +2,13 @@ import React from "react";
 import Moment from "react-moment";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { deleteLog } from "../../actions/logActions";
+import { deleteLog, setCurrent } from "../../actions/logActions";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-const LogItems = ({ log, deleteLog }) => {
+const LogItems = ({ log, deleteLog, setCurrent }) => {
   const onDelete = () => {
     deleteLog(log.id);
-    M.toast({ html: `Log Deleteed` });
+    M.toast({ html: `Log Deleted` });
   };
   return (
     <li className="collection-item">
@@ -18,6 +18,7 @@ const LogItems = ({ log, deleteLog }) => {
           className={`modal-trigger ${
             log.attention ? "red-text" : "blue-text"
           }`}
+          onClick={() => setCurrent(log)}
         >
           {log.message}
         </a>
@@ -38,6 +39,7 @@ const LogItems = ({ log, deleteLog }) => {
 LogItems.propTypes = {
   log: PropTypes.object.isRequired,
   deleteLog: PropTypes.func.isRequired,
+  setCurrent: PropTypes.func.isRequired,
 };
 
-export default connect(null, { deleteLog })(LogItems);
+export default connect(null, { deleteLog, setCurrent })(LogItems);

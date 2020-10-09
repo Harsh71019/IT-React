@@ -4,6 +4,10 @@ import {
   SET_LOADING,
   LOGS_ERROR,
   DELETE_LOGS,
+  SET_CURRENT,
+  UPDATE_LOG,
+  CLEAR_CURRENT,
+  SEARCH_LOGS,
 } from "./types";
 
 export const getLogs = () => async (dispatch) => {
@@ -19,13 +23,32 @@ export const getLogs = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: LOGS_ERROR,
-      payload: err.response.data,
+      payload: err.response.statusText,
+    });
+  }
+};
+
+//Search Logs
+
+export const searchLogs = (text) => async (dispatch) => {
+  try {
+    setLoading();
+    const res = await fetch(`/logs?q=${text}`);
+    const data = await res.json();
+
+    dispatch({
+      type: SEARCH_LOGS,
+      payload: data,
+    });
+  } catch (err) {
+    dispatch({
+      type: LOGS_ERROR,
+      payload: err.response.statusText,
     });
   }
 };
 
 //Add new logs
-
 export const addLog = (log) => async (dispatch) => {
   try {
     setLoading();
@@ -45,7 +68,7 @@ export const addLog = (log) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: LOGS_ERROR,
-      payload: err.response.data,
+      payload: err.response.statusText,
     });
   }
 };
@@ -66,9 +89,53 @@ export const deleteLog = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: LOGS_ERROR,
-      payload: err.response.data,
+      payload: err.response.statusText,
     });
   }
+};
+
+//Update log on server
+
+export const updateLog = (log) => async (dispatch) => {
+  try {
+    setLoading();
+    const res = await fetch(`/logs/${log.id}`, {
+      method: "PUT",
+      body: JSON.stringify(log),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await res.json();
+
+    dispatch({
+      type: UPDATE_LOG,
+      payload: data,
+    });
+  } catch (err) {
+    dispatch({
+      type: LOGS_ERROR,
+      payload: err.response.statusText,
+    });
+  }
+};
+
+//Set Current Logs
+
+export const setCurrent = (log) => {
+  return {
+    type: SET_CURRENT,
+    payload: log,
+  };
+};
+
+//Clear Current Logs
+
+export const clearCurrent = () => {
+  return {
+    type: CLEAR_CURRENT,
+  };
 };
 
 export const setLoading = () => {
