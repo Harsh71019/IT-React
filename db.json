@@ -1,0 +1,33 @@
+{
+  "logs": [
+    {
+      "message": "fef",
+      "attention": true,
+      "tech": "harsh patel",
+      "date": "2020-10-09T07:46:26.504Z",
+      "id": 1
+    }
+  ],
+  "techs": [
+    {
+      "id": 1,
+      "firstName": "Harsh",
+      "lastName": "fihoeshf"
+    },
+    {
+      "id": 2,
+      "firstName": "Harsh",
+      "lastName": "fihoeshf"
+    },
+    {
+      "id": 3,
+      "firstName": "Harsh",
+      "lastName": "fihoeshf"
+    },
+    {
+      "firstName": "fejsf",
+      "lastName": "fhiefhief",
+      "id": 4
+    }
+  ]
+}
